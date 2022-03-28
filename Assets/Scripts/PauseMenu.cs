@@ -15,7 +15,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         targetMenu.SetActive(false);
         SceneManager.LoadScene(sceneBuildIndex:0);
-        SceneManager.LoadScene(sceneBuildIndex: 1, LoadSceneMode.Additive);
+        //SceneManager.LoadScene(sceneBuildIndex: 1, LoadSceneMode.Additive);
     }
 
     public void pauseMenu()
@@ -28,6 +28,8 @@ public class PauseMenu : MonoBehaviour
     {
         targetMenu.SetActive(false);
         Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     // Update is called once per frame
     void Update()

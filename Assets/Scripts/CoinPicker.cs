@@ -6,37 +6,52 @@ using UnityEngine.SceneManagement;
 
 public class CoinPicker : MonoBehaviour
 {
-    private float coinCount = 0;
+    private int coinCount = 0;
     public TextMeshProUGUI coinCountDisplayer, highScore;
-    [SerializeField] public GameObject endMenu, inGameHUD;
+    [SerializeField] public GameObject endMenu;
+    public Animator animator;
+    public PlayerMovement player;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.tag == "Coin")
         {
             coinCount++;
+            player.moveSpeed += coinCount * 0.04f;
             coinCountDisplayer.text = coinCount.ToString();
             Destroy(collision.gameObject);
+        }
+        else if (collision.transform.tag == "Trap")
+        {
+            animator.Play("Die");
+            animator.SetBool("isDead",true);
+            EndMenu();
         }
     }
 
     void Awake()
     {
         endMenu.SetActive(false);
-        inGameHUD.SetActive(true);
-
     }
 
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        inGameHUD.SetActive(true);
         SceneManager.LoadScene(sceneBuildIndex: 1);
     }
 
     public void EndMenu()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         endMenu.SetActive(true);
-        highScore.text = "Your score: " + coinCount.ToString();
+        highScore.text = "Your score: " + coinCount.ToString() +"\n" +
+            "Highest score: " + PlayerPrefs.GetInt("highscore").ToString();
+        if (PlayerPrefs.GetInt("highscore") <= coinCount)
+        {
+            PlayerPrefs.SetInt("highscore", coinCount);
+            PlayerPrefs.Save();
+        }
         Time.timeScale = 0f;
     }
 }

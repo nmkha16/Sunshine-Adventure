@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Coin
+  - Trap
+  - BGM
+  - EndPosition
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - UI
   - Player
   - BackGround
-  - 
+  - Trap
   - 
   - 
   - 
@@ -41,6 +44,9 @@ TagManager:
   m_SortingLayers:
   - name: Player
     uniqueID: 3988301975
+    locked: 0
+  - name: Trap
+    uniqueID: 806799365
     locked: 0
   - name: Ground
     uniqueID: 1600928121
