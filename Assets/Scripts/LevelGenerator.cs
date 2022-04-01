@@ -36,13 +36,13 @@ public class LevelGenerator : MonoBehaviour
     {
         //grasshill y should be -36.4 to -32.0f to prevent higher platform reach far top camera
         int rng = Random.Range(0, levelList.Count);
-        if (rng== 3 || rng == 8 || rng == 9 || rng ==10)
+        if (rng== 3 || rng == 8 || rng == 9 || rng ==10 || rng == 7)
         {
-            lastEndPosition.y = Random.Range(-36.4f,-32.0f);
+            lastEndPosition.y = Random.Range(-38.4f,-33.0f);
         }
         else  lastEndPosition.y = Random.Range(-33.5f, -23.5f); // anything else should have more freedom y axis as being low platform
 
-        lastEndPosition.x += Random.Range(0f, 4f);
+        lastEndPosition.x += Random.Range(1f, 4f);
         Transform randomLevel = levelList[rng];
         Transform lastRandomLevel = SpawnLevel(randomLevel,lastEndPosition);
 

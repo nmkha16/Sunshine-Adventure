@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public float jumpForce;
     public float gravity;
     [SerializeField] private LayerMask groundMask;
-    private bool left,right;
+    //private bool left,right;
     public bool isGrounded;
     private bool canDoubleJump;
     private float lastXPosition; // check if moving in static position - prevent moving background
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        right = true;
+        //right = true;
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         endMenuScript = GetComponent<CoinPicker>();
@@ -65,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
         }
         //else rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, rb2d.velocity.y);
         else rb2d.velocity = new Vector2(1 * moveSpeed * 0.8f, rb2d.velocity.y);
-        if (rb2d.velocity.x < 0)
+        /*
+         if (rb2d.velocity.x < 0)
         {
             turnLeft();
 
@@ -83,14 +84,17 @@ public class PlayerMovement : MonoBehaviour
                 backgroundRenderer.material.mainTextureOffset += new Vector2(rb2d.velocity.x * 0.02f * Time.deltaTime, 0f); //background moving based on player speed
             }
         }
+        */
+        if (lastXPosition < transform.position.x)
+        {
+            backgroundRenderer.material.mainTextureOffset += new Vector2(rb2d.velocity.x * 0.02f * Time.deltaTime, 0f); //background moving based on player speed
+        }
         animator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
     }
 
     private void FixedUpdate()
     {
-        lastXPosition = rb2d.transform.position.x; // prevent background moving if player moving in static position
-
-
+        lastXPosition = rb2d.transform.position.x+0.05f; // prevent background moving if player moving in static position
 
         if (!isGrounded)
         {
@@ -110,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             if (isGrounded)
             {
@@ -126,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+    /*
     private void preventOffscreen()
     {
         Vector3 boundary = transform.position;
@@ -137,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = boundary;
         }
 
-    }
+    }*/
 
     private void fallOffWorld()
     {
@@ -152,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void turnLeft()
+    /*private void turnLeft()
     {
         if (left) return;
         transform.localScale = new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.z);
@@ -166,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
         left = false;
         right = true;
     }
-
+    */
     //position X = -17.2 and Position Y = -28.37792
     // must spawn origin to avoid player moving away from center and causing very high floating point may glitch the game
     private void spawnOrigin()

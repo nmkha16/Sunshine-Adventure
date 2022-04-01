@@ -17,7 +17,7 @@ public class CoinPicker : MonoBehaviour
         if (collision.transform.tag == "Coin")
         {
             coinCount++;
-            player.moveSpeed += coinCount * 0.04f;
+            player.moveSpeed += coinCount * 0.01f;
             coinCountDisplayer.text = coinCount.ToString();
             Destroy(collision.gameObject);
         }
